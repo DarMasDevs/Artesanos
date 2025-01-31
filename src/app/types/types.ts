@@ -1,20 +1,31 @@
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   password: string;
-  role: 'admin' | 'seller' | 'user';
+  role: 'Admin' | 'Customer' | 'Seller';
   image: string;
-  products: Products[];
+  phone: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  favorites: string[];
 }
 
 export interface Products {
-  id: string;
-  name: string;
+  _id: string;
+  title: string;
   description: string;
   price: number;
-  image: string;
+  image: string | string[];
   material: string;
+  stock: number;
+  category: string;
+  userId: string;
+  rating: number;
 }
 
 
