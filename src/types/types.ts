@@ -12,7 +12,7 @@ export interface User {
     state: string;
     zip: string;
   };
-  favorites: string[];
+  favorites: Products[];
 }
 
 export interface Products {
