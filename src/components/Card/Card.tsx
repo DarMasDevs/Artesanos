@@ -3,6 +3,7 @@ import {  HammerIcon, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { data } from "../../../public/data";
 
 interface Props {
     product: Products;
@@ -20,6 +21,9 @@ const Card = ({product}: Props) => {
   const handleFavoriteToggle = () => {
     setIsFavorite(!isFavorite);
   };
+
+  const user = data.users.find(user => user._id === product.userId);
+  const artisanName = user ? user.name : "Desconocido";
 
   return (
     <div
@@ -50,17 +54,18 @@ const Card = ({product}: Props) => {
         </div>
         {product.material && (
           <div className="absolute bottom-4 left-4">
-            <div className="flex items-center gap-1 bg-amber-100/90 backdrop-blur-sm px-3 py-1 rounded-full">
-              <HammerIcon strokeWidth={2} className="text-amber-700" />
-              <span className="text-xs font-medium text-amber-700">{product.material}</span>
+            <div className="flex items-center gap-1 bg-amber/20 backdrop-blur-sm px-3 py-1 rounded-full">
+              <HammerIcon strokeWidth={2} className="text-amber/90" />
+              <span className="text-xs font-medium text-amber/75">{product.material}</span>
             </div>
           </div>
         )}
       </div>
 
       <div className="p-6">
-        <div className="mb-4">
-          <h3 className="font-serif text-xl font-medium text-gray-800 mb-2">
+        <div className="mb-4 items-start">
+        <p className="text-sm text-gray mb-1">{artisanName}</p>
+          <h3 className="font-serif text-md font-medium text-gray mb-2">
             {product.title}
           </h3>
         </div>

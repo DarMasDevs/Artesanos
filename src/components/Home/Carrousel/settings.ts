@@ -3,7 +3,7 @@ export const settings = {
     infinite: true,
     pauseOnHover: true,
     speed: 1500,
-    slidesToShow: 4,
+    slidesToShow: 4.2,
     slidesToScroll: 4,
     initialSlide: 0,
     responsive: [
