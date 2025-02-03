@@ -1,9 +1,8 @@
-import Carrousel from "@/components/Home/Carrousel";
+import Carrousel from "@/components/Home/Carrousel/Carrousel";
 import Hero from "@/components/Home/Hero";
 import { data } from "../../public/data";
 
 export default function Home() {
-
   const categories = data.categories;
 
   console.log(categories);
