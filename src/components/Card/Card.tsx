@@ -1,5 +1,5 @@
 import { Products } from "@/types/types";
-import { Heart, HeartCrack, HeartHandshake, HeartIcon, PenTool, ShoppingCart } from "lucide-react";
+import { HeartIcon, PenTool, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -44,7 +44,7 @@ const Card = ({product}: Props) => {
             className="p-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors duration-300"
             aria-label="Add to favorites"
           >
-            <HeartCrack
+            <HeartIcon strokeWidth={2}
               className={`text-xl ${isFavorite ? "text-red-500" : "text-gray-400"}`}
             />
           </button>
