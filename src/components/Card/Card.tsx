@@ -1,7 +1,8 @@
 import { Products } from "@/types/types";
-import { HeartIcon, PenTool, ShoppingCart } from "lucide-react";
+import {  HammerIcon, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 
 interface Props {
     product: Products;
@@ -44,15 +45,13 @@ const Card = ({product}: Props) => {
             className="p-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors duration-300"
             aria-label="Add to favorites"
           >
-            <HeartIcon strokeWidth={2}
-              className={`text-xl ${isFavorite ? "text-red-500" : "text-gray-400"}`}
-            />
+           {isFavorite ?   <BsHeartFill className="text-xl text-red" />  : <BsHeart className="text-xl text-red" />}
           </button>
         </div>
         {product.material && (
           <div className="absolute bottom-4 left-4">
             <div className="flex items-center gap-1 bg-amber-100/90 backdrop-blur-sm px-3 py-1 rounded-full">
-              <PenTool className="text-amber-700" />
+              <HammerIcon strokeWidth={2} className="text-amber-700" />
               <span className="text-xs font-medium text-amber-700">{product.material}</span>
             </div>
           </div>
@@ -74,7 +73,7 @@ const Card = ({product}: Props) => {
           </div>
           <button
             onClick={handleAddToCart}
-            className="flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full transition-colors duration-300"
+            className="flex items-center gap-2 bg-amber-600 hover:bg-amber  px-4 py-2 rounded-full transition-colors duration-300 text-sm font-medium "
           >
             <ShoppingCart />
             <span>Agregar al carrito</span>

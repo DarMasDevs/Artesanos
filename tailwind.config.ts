@@ -24,8 +24,8 @@ export default {
       "gradient": "#000000b3",
       "b-green": "#3C826C",
       "white": "#ffffff",
-      "red-500": "#EF4444",
-      "gray-400": "#9CA3AF",
+      "red": "#EF4444",
+      "gray": "#9CA3AF",
       
     },
   },

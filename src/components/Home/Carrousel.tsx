@@ -65,7 +65,7 @@ const Carrousel = ({categoryName} : Props) => {
 
   return (
     <div className="slider-container bg-cream">
-            <div className="bg-amber p-5 text-2xl text-brown text-bold text-center border-4 m-2 border-brown">
+            <div className="bg-amber p-5 text-2xl text-brown text-bold text-center border-4 m-8 border-brown">
                 {categoryName}
             </div>
             <div className="text-center min-h-[209px] m-2">
