@@ -28,6 +28,11 @@ export interface Products {
   rating: number;
 }
 
+export interface Category {
+  _id: string;
+  name: string;
+  subCategories: string | string[] | [];
+}
 
 export interface shoppingCart {
     id: string;

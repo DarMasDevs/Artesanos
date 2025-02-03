@@ -1,8 +1,10 @@
-import { Products, User } from "@/app/types/types";
+import { Products, User, Category } from "@/types/types";
+
 
 export const data  : {
   users : User[],
   products : Products[],
+  categories : Category[]
 } = {
   products: [
     {
@@ -726,5 +728,32 @@ export const data  : {
       },
       favorites: [],
     }
+  ],
+  categories: [
+    {
+      _id: "1",
+      name: "muebles",
+      subCategories: ["sillas", "mesas", "estanterías", "camas", "sofás"],
+    },
+    {
+      _id: "2",
+      name: "utensilios",
+      subCategories: ["cuchillos", "tablas de cortar", "cucharas", "tazas"],
+    },
+    {
+      _id: "3",
+      name: "juguetes",
+      subCategories: ["puzzles", "camiones", "bloques de construcción"],
+    },
+    {
+      _id: "4",
+      name: "accesorios",
+      subCategories: ["carteras", "cinturones", "bolsos", "pulseras"],
+    },
+    {
+      _id: "5",
+      name: "calzado",
+      subCategories: ["botas", "sandalias", "zapatos"],
+    },
   ],
 };
