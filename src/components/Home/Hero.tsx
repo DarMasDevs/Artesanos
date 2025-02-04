@@ -15,7 +15,7 @@ const Hero = () => {
             arte y la belleza
           </p>
           <div className="flex flex-col gap-5 px-1 py-2 font-bold md:flex-row md:justify-between md:gap-5 lg:justify-between">
-            <Link href={routes.products}>
+            <Link href={routes.store}>
               <button className="text-nowrap rounded-lg bg-cream bg-opacity-60 p-2 text-2xl hover:shadow-xl hover:shadow-amber xl:text-xl">
                 Ver Productos
               </button>

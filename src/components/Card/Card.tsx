@@ -4,6 +4,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { data } from "../../../public/data";
+import Link from "next/link";
+import { routes } from "@/config/routes";
 
 interface Props {
   product: Products;
@@ -27,7 +29,12 @@ const Card = ({ product }: Props) => {
     ? user.address.state + ", " + user.address.city
     : "Desconocido";
 
+
+  
+
   return (
+    <>
+   <Link href={`${routes.product}/${product._id}-${product.title.toLowerCase().replace(/\s+/g, '-')}`}>
     <div
       className="mx-auto w-[290px] overflow-hidden rounded-lg bg-stone-50 shadow-md transition-all duration-300 hover:shadow-xl"
       style={{
@@ -93,6 +100,8 @@ const Card = ({ product }: Props) => {
         </div>
       </div>
     </div>
+    </Link>
+    </>
   );
 };
 

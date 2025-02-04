@@ -18,7 +18,7 @@ export const navlinks = [
     {
       nombre: "Productos",
       icono: <PackageSearchIcon />,
-      link: routes.products,
+      link: routes.store,
       sublinks: [
         { nombre: "Categoría 1", link: "/category1" },
         { nombre: "Categoría 2", link: "/category2" },
