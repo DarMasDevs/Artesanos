@@ -12,7 +12,6 @@ import {
   FaShoppingCart,
   FaStar,
 } from "react-icons/fa";
-import { FaStairs } from "react-icons/fa6";
 
 type Props = {
   product: Products;
