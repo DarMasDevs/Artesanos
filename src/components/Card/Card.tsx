@@ -24,6 +24,7 @@ const Card = ({product}: Props) => {
 
   const user = data.users.find(user => user._id === product.userId);
   const artisanName = user ? user.name : "Desconocido";
+  const ArtisanLocation = user ? user.address.state + ", " + user.address.city : "Desconocido";
 
   return (
     <div
@@ -65,16 +66,17 @@ const Card = ({product}: Props) => {
       <div className="p-6">
         <div className="mb-4 items-start">
         <p className="text-sm text-gray mb-1">{artisanName}</p>
-          <h3 className="font-serif text-md font-medium text-gray mb-2">
+          <p className="font-serif text-md font-medium text-gray mb-2">
             {product.title}
-          </h3>
+          </p>
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col items-center justify-between">
+        <div className="flex items-center gap-2">
             <span className="text-lg font-medium text-gray-900">
               ${product.price}
             </span>
+            <span className="text-sm text-gray-500">{ArtisanLocation}</span>
           </div>
           <button
             onClick={handleAddToCart}
