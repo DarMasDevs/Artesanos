@@ -1,5 +1,5 @@
 "use client";
-import { Products } from "@/types/types";
+import { Products, RootState } from "@/types/types";
 import Image from "next/image";
 import React, { useState } from "react";
 import {
@@ -12,6 +12,9 @@ import {
   FaShoppingCart,
   FaStar,
 } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "@/redux/features/cart";
+import toast, { Toaster } from "react-hot-toast";
 
 type Props = {
   product: Products;
@@ -41,8 +44,45 @@ const Details = ({ product }: Props) => {
     }
   };
 
+  //agregar al carrito
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cartReducer.cartItems);
+
+  const handleAddToCart = () => {
+    if (quantity >= 1) {
+      const productData = {
+        _id: product._id,
+        title: product.title,
+        price: product.price,
+        quantity: quantity,
+        subtotal: product.price * quantity,
+        image: product.image[0],
+        material: product.material,
+        stock: product.stock,
+      };
+
+      const existingItem = cartItems.find((item) => item._id === product._id);
+
+      if (
+        existingItem &&
+        existingItem.quantity + quantity > existingItem.stock
+      ) {
+        toast.success(
+          "No hay suficiente stock disponible para agregar más unidades de este producto al carrito."
+        );
+      } else {
+        console.log("productData ", productData);
+        dispatch(addItem(productData));
+        toast.success(`${product.title} agregado al carrito.`);
+      }
+    } else {
+      toast.success("La cantidad debe ser mayor a 0");
+    }
+  };
+
+
   return (
-    <div className="container md:mt-14 mx-auto px-4 py-8 z-50000">
+    <div className="z-50000 container mx-auto px-4 py-8 md:mt-14">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Image Gallery */}
         <div className="space-y-4">
@@ -144,12 +184,14 @@ const Details = ({ product }: Props) => {
             </div>
 
             <button
-              className={`flex items-center space-x-2 rounded-lg px-6 py-3 bg-amber text-white ${product.stock === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-brown-600 hover:bg-brown-700 transform transition hover:scale-105"}`}
+              onClick={handleAddToCart}
+              className={`flex items-center space-x-2 rounded-lg bg-amber px-6 py-3 text-white ${product.stock === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-brown-600 hover:bg-brown-700 transform transition hover:scale-105"}`}
               disabled={product.stock === 0}
             >
               <FaShoppingCart />
-              <span>Add to Cart</span>
+              <span>Agregar a carrito</span>
             </button>
+            <Toaster position="top-center" />
           </div>
         </div>
       </div>

@@ -35,11 +35,21 @@ export interface Category {
 }
 
 export interface shoppingCart {
-    id: string;
+    _id: string;
     product: Products | Products[];
     quantity: number;
+    stock: number;
     userId: string;
     totalPrice: number;
     createdAt: string;
     updatedAt: string;
+}
+
+export interface CartState {
+  cartItems: shoppingCart[];
+}
+
+export interface RootState {
+  cartReducer: CartState;
+  // otros estados...
 }

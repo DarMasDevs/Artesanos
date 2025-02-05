@@ -2,12 +2,12 @@ import { Products } from "@/types/types";
 import { data } from "../../../../public/data";
 import Details from "@/components/Details/Details";
 
-// Función para simular una solicitud asíncrona
+
 const fetchProductById = async (id: string): Promise<Products | undefined> => {
   return data.products.find((product) => product._id.toString() === id);
 };
 
-// Componente de la página
+
 const ProductDetail = async ({
   params,
 }: {
