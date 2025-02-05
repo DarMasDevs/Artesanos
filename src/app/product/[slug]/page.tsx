@@ -1,26 +1,29 @@
-import { Products } from "@/types/types";
-import { data } from "../../../../public/data";
-import Details from "@/components/Details/Details";
-import { Metadata, ResolvingMetadata } from "next";
+import { Products } from '@/types/types';
+import { data } from '../../../../public/data';
+import Details from '@/components/Details/Details';
+import { Metadata } from 'next';
 
+// Definir el tipo PageProps
 interface PageProps {
   params: {
     slug: string;
   };
 }
 
-export async function generateMetadata(
-  { params }: PageProps,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+// Función para simular una solicitud asíncrona
+const fetchProductById = async (id: string): Promise<Products | undefined> => {
+  return data.products.find((product) => product._id.toString() === id);
+};
+
+// Función para generar metadatos
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = params;
-  const [id] = slug.split("-");
-  const product = data.products.find((product: Products) => product._id === id);
+  const [id] = slug.split('-');
+  const product = await fetchProductById(id);
 
   if (!product) {
     return {
-      title: "Producto no encontrado",
+      title: 'Producto no encontrado',
     };
   }
 
@@ -30,13 +33,11 @@ export async function generateMetadata(
   };
 }
 
-const ProductDetail = ({ params }: PageProps) => {
-  // Obtención del slug
+// Componente de la página
+const ProductDetail = async ({ params }: PageProps) => {
   const { slug } = params;
-  const [id] = slug.split("-");
-
-  // Obtención del producto
-  const product = data.products.find((product: Products) => product._id === id);
+  const [id] = slug.split('-');
+  const product = await fetchProductById(id);
 
   if (!product) {
     return <div>Producto no encontrado</div>;
