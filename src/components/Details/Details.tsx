@@ -14,7 +14,7 @@ import {
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/redux/features/cart";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 type Props = {
   product: Products;
@@ -148,7 +148,7 @@ const Details = ({ product }: Props) => {
             className={`inline-flex items-center space-x-2 rounded-full px-4 py-2 ${product.stock > 5 ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`}
           >
             <FaBox />
-            <span>{product.stock > 5 ? "In Stock" : "Low Stock"}</span>
+            <span>{product.stock > 5 ? "En Stock" : "Bajo Stock"}</span>
           </div>
 
           <div className="bg-gray-50 rounded-lg p-4">
@@ -191,7 +191,6 @@ const Details = ({ product }: Props) => {
               <FaShoppingCart />
               <span>Agregar a carrito</span>
             </button>
-            <Toaster position="top-center" />
           </div>
         </div>
       </div>

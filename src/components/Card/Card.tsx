@@ -1,4 +1,4 @@
-import { Products } from "@/types/types";
+import { Products, RootState } from "@/types/types";
 import { HammerIcon, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -6,6 +6,9 @@ import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { data } from "../../../public/data";
 import Link from "next/link";
 import { routes } from "@/config/routes";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { addItem } from "@/redux/features/cart";
 
 interface Props {
   product: Products;
@@ -14,10 +17,6 @@ interface Props {
 const Card = ({ product }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const handleAddToCart = () => {
-    console.log("Added to cart:", product.title);
-  };
 
   const handleFavoriteToggle = () => {
     setIsFavorite(!isFavorite);
@@ -29,12 +28,38 @@ const Card = ({ product }: Props) => {
     ? user.address.state + ", " + user.address.city
     : "Desconocido";
 
+  //agregar al carrito
+  const dispatch = useDispatch();
+  const cartItems = useSelector(
+    (state: RootState) => state.cartReducer.cartItems,
+  );
 
-  
+  const handleAddToCart = () => {
+    const productData = {
+      _id: product._id,
+      title: product.title,
+      price: product.price,
+      quantity: 1,
+      subtotal: product.price * 1,
+      image: product.image[0],
+      material: product.material,
+      stock: product.stock,
+    };
+
+    const existingItem = cartItems.find((item) => item._id === product._id);
+
+    if (existingItem && existingItem.quantity + 1 > existingItem.stock) {
+      toast.success(
+        "No hay suficiente stock disponible para agregar más unidades de este producto al carrito.",
+      );
+    } else {
+      console.log("productData ", productData);
+      dispatch(addItem(productData));
+      toast.success(`${product.title} agregado al carrito.`);
+    }
+  };
 
   return (
-    <>
-   <Link href={`${routes.product}/${product._id}-${product.title.toLowerCase().replace(/\s+/g, '-')}`}>
     <div
       className="mx-auto w-[290px] overflow-hidden rounded-lg bg-stone-50 shadow-md transition-all duration-300 hover:shadow-xl"
       style={{
@@ -44,14 +69,18 @@ const Card = ({ product }: Props) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="group relative overflow-hidden">
-        <Image
-          width={400}
-          height={400}
-          src={product.image[0]}
-          alt={product.title}
-          className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-110"
-          loading="lazy"
-        />
+        <Link
+          href={`${routes.product}/${product._id}-${product.title.toLowerCase().replace(/\s+/g, "-")}`}
+        >
+          <Image
+            width={400}
+            height={400}
+            src={product.image[0]}
+            alt={product.title}
+            className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+          />
+        </Link>
         <div className="absolute right-4 top-4 z-10">
           <button
             onClick={handleFavoriteToggle}
@@ -84,7 +113,7 @@ const Card = ({ product }: Props) => {
         </div>
 
         <div className="flex flex-col items-center justify-between">
-          <div className="flex w-full items-start gap-2 justify-between mb-2">
+          <div className="mb-2 flex w-full items-start justify-between gap-2">
             <span className="text-md text-gray-900 font-medium">
               ${product.price}
             </span>
@@ -99,9 +128,8 @@ const Card = ({ product }: Props) => {
           </button>
         </div>
       </div>
+     
     </div>
-    </Link>
-    </>
   );
 };
 

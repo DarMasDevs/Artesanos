@@ -43,6 +43,10 @@ export interface shoppingCart {
     totalPrice: number;
     createdAt: string;
     updatedAt: string;
+    subtotal: number;
+    image: string;
+    title: string;
+    price: number;
 }
 
 export interface CartState {
