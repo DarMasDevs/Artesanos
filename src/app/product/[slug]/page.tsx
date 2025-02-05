@@ -3,20 +3,13 @@ import { data } from '../../../../public/data';
 import Details from '@/components/Details/Details';
 import { Metadata } from 'next';
 
-// Definir el tipo PageProps
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
 // Función para simular una solicitud asíncrona
 const fetchProductById = async (id: string): Promise<Products | undefined> => {
   return data.products.find((product) => product._id.toString() === id);
 };
 
 // Función para generar metadatos
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const { slug } = params;
   const [id] = slug.split('-');
   const product = await fetchProductById(id);
@@ -34,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 // Componente de la página
-const ProductDetail = async ({ params }: PageProps) => {
+const ProductDetail = async ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
   const [id] = slug.split('-');
   const product = await fetchProductById(id);
