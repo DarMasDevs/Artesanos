@@ -1,35 +1,22 @@
-import { Products } from '@/types/types';
-import { data } from '../../../../public/data';
-import Details from '@/components/Details/Details';
-import { Metadata } from 'next';
+import { Products } from "@/types/types";
+import { data } from "../../../../public/data";
+import Details from "@/components/Details/Details";
 
 // Función para simular una solicitud asíncrona
 const fetchProductById = async (id: string): Promise<Products | undefined> => {
   return data.products.find((product) => product._id.toString() === id);
 };
 
-// Función para generar metadatos
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { slug } = params;
-  const [id] = slug.split('-');
-  const product = await fetchProductById(id);
-
-  if (!product) {
-    return {
-      title: 'Producto no encontrado',
-    };
-  }
-
-  return {
-    title: product.title,
-    description: product.description,
-  };
-}
-
 // Componente de la página
-const ProductDetail = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = params;
-  const [id] = slug.split('-');
+const ProductDetail = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
+  const { slug } = await params;
+  console.log(slug);
+
+  const [id] = slug.split("-");
   const product = await fetchProductById(id);
 
   if (!product) {
