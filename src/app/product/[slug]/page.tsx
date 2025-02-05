@@ -1,17 +1,42 @@
-import { data } from '../../../../public/data';
-import { Products } from '@/types/types';
-import Details from '@/components/Details/Details';
+import { Products } from "@/types/types";
+import { data } from "../../../../public/data";
+import Details from "@/components/Details/Details";
+import { Metadata, ResolvingMetadata } from "next";
 
-interface ProductDetailProps {
+interface PageProps {
   params: {
     slug: string;
   };
 }
 
-const ProductDetail = ({ params }: ProductDetailProps) => {
-  const slug = params.slug;
-  const [id] = slug.split('-');
-  const product = data.products.find((product: Products) => product._id === id) || null;
+export async function generateMetadata(
+  { params }: PageProps,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { slug } = params;
+  const [id] = slug.split("-");
+  const product = data.products.find((product: Products) => product._id === id);
+
+  if (!product) {
+    return {
+      title: "Producto no encontrado",
+    };
+  }
+
+  return {
+    title: product.title,
+    description: product.description,
+  };
+}
+
+const ProductDetail = ({ params }: PageProps) => {
+  // Obtención del slug
+  const { slug } = params;
+  const [id] = slug.split("-");
+
+  // Obtención del producto
+  const product = data.products.find((product: Products) => product._id === id);
 
   if (!product) {
     return <div>Producto no encontrado</div>;
@@ -23,13 +48,5 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
     </div>
   );
 };
-
-export async function generateStaticParams() {
-  const paths = data.products.map((product) => ({
-    slug: `${product._id}-${product.title.replace(/\s+/g, '-').toLowerCase()}`,
-  }));
-
-  return paths;
-}
 
 export default ProductDetail;
