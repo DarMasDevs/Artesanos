@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ShoppingBagIcon } from 'lucide-react';
 import { navlinks } from './NavLinks';
 import { routes } from '@/config/routes';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/types/types';
 
 interface NavBarProps {
   open: boolean;
@@ -10,7 +12,17 @@ interface NavBarProps {
 
 const NavBar = ({ open }: NavBarProps) => {
 
-    const cartItemsCount = 0;
+  const cartItems = useSelector((state: RootState) => state.cartReducer.cartItems);
+
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+
+  useEffect(() => {
+    const count = cartItems.reduce((total, item) => total + item.quantity, 0);
+    if (count !== cartItemsCount) {
+      setCartItemsCount(count);
+    }
+  }, [cartItems, cartItemsCount]);
+
   return (
     <div className='flex items-center justify-between gap-5'>
       <div className="hidden md:flex lg:flex">
