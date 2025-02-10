@@ -7,6 +7,7 @@ import { Products } from "@/types/types";
 import { data } from "../../../../public/data";
 import Card from "../../Card/Card";
 import { settings } from "./settings";
+import Link from "next/link";
 
 type Props = {
   categoryName: string;
@@ -27,8 +28,15 @@ const Carrousel = ({ categoryName }: Props) => {
 
   return (
     <div className="slider-container bg-cream">
-      <div className="text-bold m-8 border-4 border-brown bg-amber p-5 text-center text-2xl text-brown">
-        {categoryName}
+      <div className="flex justify-between items-center">
+        <div className="text-bold m-8 border-4 border-brown bg-amber p-5 text-center text-2xl text-brown">
+          {categoryName}
+        </div>
+        <div>
+          <Link href={`/store/${categoryName}`}>
+            <p className="text-center text-2xl text-brown">Ver todos</p>
+          </Link>
+        </div>
       </div>
       <div className="m-2 min-h-[209px] text-center">
         {products.length === 0 ? (
