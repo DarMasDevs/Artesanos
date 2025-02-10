@@ -8,6 +8,7 @@ import { data } from "../../../../public/data";
 import Card from "../../Card/Card";
 import { settings } from "./settings";
 import Link from "next/link";
+import { routes } from "@/config/routes";
 
 type Props = {
   categoryName: string;
@@ -33,7 +34,7 @@ const Carrousel = ({ categoryName }: Props) => {
           {categoryName.toUpperCase()}
         </div>
         <div>
-          <Link href={`/store/${categoryName}`}>
+          <Link href={`${routes.store}/${categoryName}`}>
             <p className="font-bold text-md bg-secondary text-brown px-4 py-2 rounded transition ease-in-out hover:bg-amber font-serif">Ver mas</p>
           </Link>
         </div>

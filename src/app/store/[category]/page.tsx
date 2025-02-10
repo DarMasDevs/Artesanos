@@ -13,7 +13,7 @@ const Page = () => {
 
   return (
     <div className="p-10 md:px-4 mt-20">
-      <Store  categoryName={category || '' } products={products} />
+      <Store  categoryName={category || 'Todos los productos'} products={products} />
     </div>
   )
 }

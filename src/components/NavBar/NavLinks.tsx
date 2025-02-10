@@ -7,7 +7,9 @@ import {
   // User,
 } from "lucide-react";
 import { routes } from "../../config/routes";
+import { data } from "../../../public/data";
 
+const categories = Array.from(new Set(data.categories.map(category => category.name)));
 
 export const navlinks = [
     {
@@ -19,11 +21,10 @@ export const navlinks = [
       nombre: "Productos",
       icono: <PackageSearchIcon />,
       link: routes.store,
-      sublinks: [
-        { nombre: "Categoría 1", link: "/category1" },
-        { nombre: "Categoría 2", link: "/category2" },
-        { nombre: "Categoría 3", link: "/category3" },
-      ],
+      sublinks: categories.map(category => ({
+        nombre: category,
+        link: `/store/${category}`,
+      })),
     },
     {
       nombre: "Sos Vendedor",
