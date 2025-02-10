@@ -28,13 +28,13 @@ const Carrousel = ({ categoryName }: Props) => {
 
   return (
     <div className="slider-container bg-cream">
-      <div className="flex justify-between items-center">
-        <div className="text-bold m-8 border-4 border-brown bg-amber p-5 text-center text-2xl text-brown">
-          {categoryName}
+      <div className="flex justify-between items-center border-b-2 border-b-brown px-8 m-4 w-[95%] mx-auto">
+        <div className="text-3xl font-bold text-brown px-2 text-center font-serif">
+          {categoryName.toUpperCase()}
         </div>
         <div>
           <Link href={`/store/${categoryName}`}>
-            <p className="text-center text-2xl text-brown">Ver todos</p>
+            <p className="font-bold text-md bg-secondary text-brown px-4 py-2 rounded transition ease-in-out hover:bg-amber font-serif">Ver mas</p>
           </Link>
         </div>
       </div>
