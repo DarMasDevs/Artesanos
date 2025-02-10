@@ -61,7 +61,7 @@ const Card = ({ product }: Props) => {
 
   return (
     <div
-      className="mx-auto w-[290px] overflow-hidden rounded-lg bg-stone-50 shadow-md transition-all duration-300 hover:shadow-xl"
+      className="mx-1 overflow-hidden rounded-lg bg-stone-50 shadow-md transition-all duration-300 hover:shadow-xl"
       style={{
         transform: isHovered ? "scale(1.02)" : "scale(1)",
       }}

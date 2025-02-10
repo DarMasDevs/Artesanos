@@ -38,7 +38,7 @@ const Carrousel = ({ categoryName }: Props) => {
           </Link>
         </div>
       </div>
-      <div className="m-2 min-h-[209px] text-center">
+      <div className="m-2 min-h-[209px] text-center px-2">
         {products.length === 0 ? (
           "Proximamente nuevos productos artesanales..."
         ) : (
