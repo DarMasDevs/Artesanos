@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaTimes } from 'react-icons/fa';
+import { FaStar, FaTimes } from 'react-icons/fa';
 
 interface Props {
     filters: {
@@ -16,10 +16,11 @@ interface Props {
     setIsMobileFiltersOpen : React.Dispatch<React.SetStateAction<boolean>>
     resetFilters : () => void
     availableMaterials : string[]
+    availableRatings : number[]
     maxPrice : number
 }
 
-const Filtros = ({ filters, setFilters, ismobile,setIsMobileFiltersOpen, resetFilters, availableMaterials, maxPrice }: Props) => {
+const Filtros = ({ filters, setFilters, ismobile,setIsMobileFiltersOpen, resetFilters, availableMaterials, maxPrice, availableRatings }: Props) => {
   return (
     <div className={`${ismobile ? "block" : "hidden"} md:block bg-white p-4 rounded-lg shadow-md`}>
     <div className="flex justify-between items-center mb-4 md:hidden">
@@ -74,30 +75,30 @@ const Filtros = ({ filters, setFilters, ismobile,setIsMobileFiltersOpen, resetFi
     </div>
 
     <div className="mb-6">
-      <h3 className="font-medium mb-3">Material</h3>
-      {["Madera", "Metal", "Cuero"].map(material => (
-        <label key={material} className="flex items-center mb-2">
+      <h3 className="font-medium mb-3">Rating</h3>
+      {availableRatings.map(rating => (
+        <label key={rating} className="flex items-center mb-2">
           <input
             type="checkbox"
-            checked={filters.materials.includes(material)}
+            checked={filters.rating.includes(rating)}
             onChange={(e) => {
               setFilters(prev => ({
                 ...prev,
-                materials: e.target.checked
-                  ? [...prev.materials, material]
-                  : prev.materials.filter(m => m !== material)
+                rating: e.target.checked
+                  ? [...prev.rating, rating]
+                  : prev.rating.filter(m => m !== rating)
               }));
             }}
             className="mr-2"
           />
-          {material}
+          {rating} <span>{" "}<FaStar className='text-amber' /></span>
         </label>
       ))}
     </div>
 
     <button
       onClick={resetFilters}
-      className="w-full bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300 transition-colors"
+      className="w-full bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300  hover:bg-light-brown hover:text-white ease-in-out transition-all duration-300"
     >
       Resetear Filtros
     </button>

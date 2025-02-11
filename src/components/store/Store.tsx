@@ -53,6 +53,8 @@ const Store = ({ categoryName, products }: Props) => {
 
   const availableMaterials = Array.from(new Set(products.map(product => product.material)));
 
+  const availableRatings = Array.from(new Set(products.map(product => product.rating)));
+
   return (
     <main>
       <header className="flex items-center justify-between">
@@ -66,7 +68,7 @@ const Store = ({ categoryName, products }: Props) => {
         >
           <FaFilter /> Filtros
         </button>
-          <Filtros filters={filters} setFilters={setFilters} ismobile={isMobileFiltersOpen} setIsMobileFiltersOpen={setIsMobileFiltersOpen} resetFilters={handleResetFilters} availableMaterials={availableMaterials} maxPrice={maxPrice} />
+          <Filtros filters={filters} setFilters={setFilters} ismobile={isMobileFiltersOpen} setIsMobileFiltersOpen={setIsMobileFiltersOpen} resetFilters={handleResetFilters} availableMaterials={availableMaterials} maxPrice={maxPrice} availableRatings={availableRatings} />
         </div>
         <div className="flex flex-col gap-4 md:w-3/4">
           <Search searchProducts={search} setSearch={setSearch} />
