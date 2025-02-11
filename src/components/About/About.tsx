@@ -108,8 +108,8 @@ const About = () => {
                 Promover el uso de materiales naturales y técnicas artesanales.
               </span>
             </li>
-            <li className="flex items-center text-blue-700">
-              <FaRecycle className="mr-2" />
+            <li className="flex items-center ">
+              <FaRecycle className="mr-2 text-blue-700" />
               <span>
                 Contribuir a un estilo de vida más ecológico y responsable.
               </span>
