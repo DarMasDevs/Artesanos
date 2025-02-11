@@ -13,6 +13,7 @@ type Props = {
 const Store = ({ categoryName, products }: Props) => {
   const [search, setSearch] = React.useState("");
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+  const [quantityProducts, setQuantityProducts] = useState(8);
 
   const maxPrice = Math.max(...products.map((product) => product.price));
 
@@ -51,9 +52,19 @@ const Store = ({ categoryName, products }: Props) => {
     });
   };
 
-  const availableMaterials = Array.from(new Set(products.map(product => product.material)));
+  const availableMaterials = Array.from(
+    new Set(products.map((product) => product.material)),
+  );
 
-  const availableRatings = Array.from(new Set(products.map(product => product.rating)));
+  const availableRatings = Array.from(
+    new Set(products.map((product) => product.rating)),
+  );
+
+  const handleChangeQuantityProducts = () => {
+    setQuantityProducts(quantityProducts + 8);
+  };
+
+  const sliceProducts = filteredProducts.slice(0, quantityProducts);
 
   return (
     <main>
@@ -62,17 +73,36 @@ const Store = ({ categoryName, products }: Props) => {
       </header>
       <section className="flex flex-col gap-4 md:flex-row">
         <div className="md:w-1/4">
-        <button
-          onClick={() => setIsMobileFiltersOpen(true)}
-          className="md:hidden mb-4 flex items-center gap-2 bg-white px-4 py-2 rounded-md shadow-sm"
-        >
-          <FaFilter /> Filtros
-        </button>
-          <Filtros filters={filters} setFilters={setFilters} ismobile={isMobileFiltersOpen} setIsMobileFiltersOpen={setIsMobileFiltersOpen} resetFilters={handleResetFilters} availableMaterials={availableMaterials} maxPrice={maxPrice} availableRatings={availableRatings} />
+          <button
+            onClick={() => setIsMobileFiltersOpen(true)}
+            className="mb-4 flex items-center gap-2 rounded-md bg-white px-4 py-2 shadow-sm md:hidden"
+          >
+            <FaFilter /> Filtros
+          </button>
+          <Filtros
+            filters={filters}
+            setFilters={setFilters}
+            ismobile={isMobileFiltersOpen}
+            setIsMobileFiltersOpen={setIsMobileFiltersOpen}
+            resetFilters={handleResetFilters}
+            availableMaterials={availableMaterials}
+            maxPrice={maxPrice}
+            availableRatings={availableRatings}
+          />
         </div>
         <div className="flex flex-col gap-4 md:w-3/4">
           <Search searchProducts={search} setSearch={setSearch} />
-          <Cards products={filteredProducts}  />
+          <Cards products={sliceProducts} />
+          {sliceProducts.length < filteredProducts.length && (
+            <div className="flex w-full justify-center">
+              <button
+                onClick={handleChangeQuantityProducts}
+                className="rounded-md bg-light-brown px-4 py-2 text-white shadow-sm transition-transform duration-300 hover:scale-105 hover:bg-brown hover:shadow-lg"
+              >
+                Cargar más
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </main>
