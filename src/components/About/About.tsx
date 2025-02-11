@@ -97,7 +97,7 @@ const About = () => {
             Propósito
           </h2>
           <p className="mb-6 text-lg leading-relaxed text-stone-600">
-            El propósito de EcoWood es conectar a los amantes de la madera con
+            El propósito de Dar Mas es conectar a los amantes de la madera con
             artesanos talentosos que crean productos únicos y sostenibles. De
             esta forma queremos:
           </p>
@@ -140,7 +140,7 @@ const About = () => {
             Este proyecto ha sido posible gracias a la colaboración de diversas
             personas comprometidas con su desarrollo y mejora continua.
             Agradecemos sinceramente a todos aquellos que han contribuido con su
-            tiempo, conocimientos y esfuerzo para hacer de EcoWood una realidad.
+            tiempo, conocimientos y esfuerzo para hacer de Dar Mas una realidad.
           </p>
           <p className="text-lg leading-relaxed text-stone-600">
             Si deseas unirte como colaborador o explorar cómo puedes contribuir,
