@@ -18,9 +18,11 @@ interface Props {
     availableMaterials : string[]
     availableRatings : number[]
     maxPrice : number
+    materialCounts : Record<string, number>
+    ratingCounts : Record<number, number>
 }
 
-const Filtros = ({ filters, setFilters, ismobile,setIsMobileFiltersOpen, resetFilters, availableMaterials, maxPrice, availableRatings }: Props) => {
+const Filtros = ({ filters, setFilters, ismobile,setIsMobileFiltersOpen, resetFilters, availableMaterials, maxPrice, availableRatings, materialCounts, ratingCounts }: Props) => {
   return (
     <div className={`${ismobile ? "block" : "hidden"} md:block bg-white p-4 rounded-lg shadow-md`}>
     <div className="flex justify-between items-center mb-4 md:hidden">
@@ -69,7 +71,7 @@ const Filtros = ({ filters, setFilters, ismobile,setIsMobileFiltersOpen, resetFi
             }}
             className="mr-2"
           />
-          {material}
+          {material} ({materialCounts[material]})
         </label>
       ))}
     </div>
@@ -91,7 +93,7 @@ const Filtros = ({ filters, setFilters, ismobile,setIsMobileFiltersOpen, resetFi
             }}
             className="mr-2"
           />
-          {rating} <span>{" "}<FaStar className='text-amber' /></span>
+          {rating} <span>{" "}<FaStar className='text-amber' /></span>  ({ratingCounts[rating] || 0})
         </label>
       ))}
     </div>

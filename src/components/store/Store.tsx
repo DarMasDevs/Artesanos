@@ -23,6 +23,7 @@ const Store = ({ categoryName, products }: Props) => {
     rating: [] as number[],
   });
 
+  
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const searchProducts = products.filter((product) => {
@@ -37,10 +38,14 @@ const Store = ({ categoryName, products }: Props) => {
         filters.materials.length === 0 ||
         filters.materials.includes(product.material);
 
-      const matchRating =
-        filters.rating.length === 0 || filters.rating.includes(product.rating);
+        const matchesRating =
+        filters.rating.length === 0 ||
+        filters.rating.includes(
+          product.rating >= 4.7 ? 5 : Math.floor(product.rating)
+        );
 
-      return matchesPrice && matchesMaterial && matchRating && searchProducts;
+
+      return matchesPrice && matchesMaterial && matchesRating && searchProducts;
     });
   }, [products, filters, search]);
 
@@ -52,19 +57,30 @@ const Store = ({ categoryName, products }: Props) => {
     });
   };
 
-  const availableMaterials = Array.from(
-    new Set(products.map((product) => product.material)),
-  );
 
-  const availableRatings = Array.from(
-    new Set(products.map((product) => product.rating)),
-  );
 
   const handleChangeQuantityProducts = () => {
     setQuantityProducts(quantityProducts + 8);
   };
 
   const sliceProducts = filteredProducts.slice(0, quantityProducts);
+
+  // Calcular la cantidad de productos por material
+  const materialCounts = products.reduce((acc, product) => {
+    acc[product.material] = (acc[product.material] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const availableMaterials = Object.keys(materialCounts);
+
+  // Calcular la cantidad de productos por categoría de estrellas
+  const ratingCounts = products.reduce((acc, product) => {
+    const roundedRating = product.rating >= 4.7 ? 5 : Math.floor(product.rating);
+    acc[roundedRating] = (acc[roundedRating] || 0) + 1;
+    return acc;
+  }, {} as Record<number, number>);
+
+  const availableRatings = [1, 2, 3, 4, 5];
 
   return (
     <main>
@@ -88,6 +104,8 @@ const Store = ({ categoryName, products }: Props) => {
             availableMaterials={availableMaterials}
             maxPrice={maxPrice}
             availableRatings={availableRatings}
+            materialCounts={materialCounts}
+            ratingCounts={ratingCounts}
           />
         </div>
         <div className="flex flex-col gap-4 md:w-3/4">
