@@ -21,7 +21,6 @@ interface RegisterFormProps {
     minLength: boolean;
     hasUpper: boolean;
     hasNumber: boolean;
-    hasSpecial: boolean;
   };
 }
 
@@ -119,14 +118,6 @@ const RegisterForm = ({ formData, handleInputChange, handleSubmit, errors, passw
                 <BsXCircleFill className="text-red-500" />
               )}
               <span className="text-sm">Un número</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              {passwordValidation.hasSpecial ? (
-                <BsFillCheckCircleFill className="text-green-500" />
-              ) : (
-                <BsXCircleFill className="text-red-500" />
-              )}
-              <span className="text-sm">Un carácter especial</span>
             </div>
           </div>
         )}

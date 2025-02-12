@@ -24,7 +24,6 @@ const Page = () => {
     minLength: formData.password.length >= 8,
     hasUpper: /[A-Z]/.test(formData.password),
     hasNumber: /[0-9]/.test(formData.password),
-    hasSpecial: /[!@#$%^&*]/.test(formData.password),
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
