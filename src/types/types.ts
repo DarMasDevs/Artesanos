@@ -49,11 +49,35 @@ export interface shoppingCart {
     price: number;
 }
 
+export interface Order {
+    _id: string;
+    number: string;
+    date: string;
+    total: string;
+    status: string;
+}
+
+export interface Notification {
+    _id: string;
+    message: string;
+    date: string;
+    isRead: boolean;
+}
+
+
 export interface CartState {
   cartItems: shoppingCart[];
 }
 
+export interface userState {
+  user: User;
+  favorites: Products[];
+  editingReviewId: string | null;
+  editedComment: string;
+}
+
 export interface RootState {
   cartReducer: CartState;
+  userReducer: userState;
   // otros estados...
 }
