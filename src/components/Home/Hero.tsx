@@ -20,7 +20,7 @@ const Hero = () => {
                 Ver Productos
               </button>
             </Link>
-            <Link href={routes.sellerRegister}>
+            <Link href={routes.login}>
               <button className="text-nowrap rounded-lg bg-cream bg-opacity-60 p-2 text-2xl hover:shadow-xl hover:shadow-amber xl:text-xl">
                 ¿Sos Vendedor?
               </button>

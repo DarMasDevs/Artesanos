@@ -29,7 +29,7 @@ export const navlinks = [
     {
       nombre: "Sos Vendedor",
       icono: <BadgeDollarSignIcon />,
-      link: routes.sellerRegister,
+      link: routes.login,
     },
     {
       nombre: "Quienes somos",
