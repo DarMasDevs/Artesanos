@@ -56,11 +56,7 @@ const Page = () => {
     setErrors(newErrors);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Add your authentication logic here
-    console.log("Form submitted:", formData);
-  };
+  
 
   return (
     <div className="bg-gray-100 flex min-h-screen items-center justify-center p-20">
@@ -88,14 +84,11 @@ const Page = () => {
             <LoginForm
               formData={formData}
               handleInputChange={handleInputChange}
-              handleSubmit={handleSubmit}
-              errors={errors}
             />
           ) : (
             <RegisterForm
               formData={formData}
               handleInputChange={handleInputChange}
-              handleSubmit={handleSubmit}
               errors={errors}
               passwordValidation={passwordValidation}
             />

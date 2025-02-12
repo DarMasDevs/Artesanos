@@ -6,5 +6,5 @@ export const routes = {
     login: "/login",
     cartDetail: "/cart",
     product: "/product",
-    
+    profile: "/profile",
   };

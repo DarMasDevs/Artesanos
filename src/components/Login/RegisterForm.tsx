@@ -11,7 +11,6 @@ interface RegisterFormProps {
     confirmPassword: string;
   };
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   errors: {
     email: string;
     password: string;
@@ -24,8 +23,14 @@ interface RegisterFormProps {
   };
 }
 
-const RegisterForm = ({ formData, handleInputChange, handleSubmit, errors, passwordValidation }: RegisterFormProps) => {
+const RegisterForm = ({ formData, handleInputChange,  errors, passwordValidation }: RegisterFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Add your authentication logic here
+    console.log("Form submitted:", formData);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">

@@ -1,5 +1,9 @@
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { data } from "../../../public/data";
+import { useDispatch } from "react-redux";
+import { loginUser } from "@/redux/features/userSlice";
 
 interface LoginFormProps {
   formData: {
@@ -7,15 +11,28 @@ interface LoginFormProps {
     password: string;
   };
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  errors: {
-    email: string;
-    password: string;
-  };
+ 
 }
 
-const LoginForm = ({ formData, handleInputChange, handleSubmit, errors }: LoginFormProps) => {
+const LoginForm = ({ formData, handleInputChange }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({ email: "", password: "" });
+
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const resutl =  data.users.find((user) => user.email === formData.email && user.password === formData.password);
+    console.log('result', resutl);
+    if (resutl) {
+      dispatch(loginUser(resutl));  
+      router.push('/profile'); 
+    } else {
+      setErrors({ ...errors, email: "Email o contraseña incorrectos" });
+    }
+  };
+
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
