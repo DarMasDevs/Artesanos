@@ -49,7 +49,6 @@ const NavBar = ({ open }: NavBarProps) => {
     dispatch(logoutUser());
     router.push(routes.login);
     toast.success("Sesión cerrada");
-    toast.dismiss();
     setIsProfileMenuOpen(false);
   };
 
@@ -60,7 +59,10 @@ const NavBar = ({ open }: NavBarProps) => {
         <p>¿Estás seguro de que quieres cerrar sesión?</p>
         <div className="mt-4 flex justify-end gap-2">
           <button
-            onClick={logout}
+            onClick={() => {
+              toast.dismiss()
+              logout();
+            }}
             className="bg-red-500 hover:bg-red-600 rounded-md px-4 py-2 "
           >
             Sí
@@ -192,14 +194,14 @@ const NavBar = ({ open }: NavBarProps) => {
       </div>
       <ToastContainer
         position="top-center"
-        autoClose={5000}
-        hideProgressBar
+        autoClose={3000}
         newestOnTop
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        theme="dark"
       />
     </div>
   );
