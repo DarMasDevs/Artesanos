@@ -8,18 +8,31 @@ import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import { FaCreditCard } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const ShoppingCart = () => {
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const [isCreatedPreference, setIsCreatedPreference] = useState(false);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
   const dispatch = useDispatch();
   const cartItems = useSelector(
     (state: RootState) => state.cartReducer.cartItems,
   );
 
-  //eslint-disable-next-line
-  const user = useSelector((state: RootState) => state.userReducer.user);
+ 
+  const userProfile = useSelector((state: RootState) => state.userReducer.user);
+
+  useEffect(() => {
+      const timeout = setTimeout(() => {
+        if (!userProfile) {
+          router.push("/login");
+        } else {
+          setLoading(false);
+        }
+      }, 3000); 
+      return () => clearTimeout(timeout);
+    }, [router, userProfile]);
 
   useEffect(() => {
     const publicKey = process.env.NEXT_PUBLIC_MP_PUBLIC_KEY as string;
