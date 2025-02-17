@@ -4,7 +4,7 @@ import { RootState } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { FiTrash2, FiMinus, FiPlus, FiShoppingCart } from "react-icons/fi";
+import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 
 const ShoppingCart = () => {
@@ -12,6 +12,8 @@ const ShoppingCart = () => {
   const cartItems = useSelector(
     (state: RootState) => state.cartReducer.cartItems,
   );
+
+  //eslint-disable-next-line
   const user = useSelector((state: RootState) => state.userReducer.user);
 
   useEffect(() => {
