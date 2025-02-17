@@ -10,19 +10,31 @@ import NotificationsSection from "@/components/Profile/NotificationsSection";
 import SettingsSection from "@/components/Profile/SettingsSection";
 import EditProfileModal from "@/components/Profile/EditProfileModal";
 import { getlogindata } from "@/redux/features/userSlice";
+import { useRouter } from "next/navigation";
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  
+  const router = useRouter();
   const userProfile = useSelector((state: RootState) => state.userReducer?.user);
-
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getlogindata()); 
   }, [dispatch]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!userProfile) {
+        router.push("/login");
+      } else {
+        setLoading(false);
+      }
+    }, 3000); 
+    return () => clearTimeout(timeout);
+  }, [router, userProfile]);
 
   const orders = [
     { _id: "1", number: "ORD-001", date: "2023-12-01", total: "€99.99", status: "Entregado" },
@@ -41,6 +53,9 @@ const UserDashboard = () => {
     setIsEditModalOpen(false);
   };
 
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Cargando...</div>;
+  }
   return (
     <div className={`min-h-screen mt-20  "bg-gray-50"}`}>
       <div className="flex flex-col md:flex-row">

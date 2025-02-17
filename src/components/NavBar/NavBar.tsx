@@ -9,6 +9,7 @@ import Image from "next/image";
 import { logoutUser } from "@/redux/features/userSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { getCartData } from "@/redux/features/cart";
 
 interface NavBarProps {
   open: boolean;
@@ -43,7 +44,8 @@ const NavBar = ({ open }: NavBarProps) => {
     setCartItemsCount(
       cartItems.reduce((total, item) => total + item.quantity, 0),
     );
-  }, [cartItems]);
+    dispatch(getCartData())
+  }, [cartItems, dispatch]);
 
   const logout = () => {
     dispatch(logoutUser());
