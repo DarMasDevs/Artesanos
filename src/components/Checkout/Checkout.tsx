@@ -3,11 +3,16 @@ import { getCartData } from "@/redux/features/cart";
 import { RootState } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect,  useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import { FaCreditCard } from "react-icons/fa";
 
 const ShoppingCart = () => {
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  const [isCreatedPreference, setIsCreatedPreference] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const cartItems = useSelector(
     (state: RootState) => state.cartReducer.cartItems,
@@ -15,6 +20,16 @@ const ShoppingCart = () => {
 
   //eslint-disable-next-line
   const user = useSelector((state: RootState) => state.userReducer.user);
+
+  useEffect(() => {
+    const publicKey = process.env.NEXT_PUBLIC_MP_PUBLIC_KEY as string;
+    if (publicKey) {
+      initMercadoPago(publicKey, {
+        locale: 'es-PE',
+      });
+    }
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     dispatch(getCartData());
@@ -28,6 +43,28 @@ const ShoppingCart = () => {
     }
   });
 
+  const handleCreatePreference = async (): Promise<string | null> => {
+    const response = await fetch('/api/mercadoPago', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ items: cartItems }),
+    });
+
+    const data = await response.json();
+    setIsCreatedPreference(true);
+    return data.id;
+  };
+
+  const handleBuy = async () => {
+    const id = await handleCreatePreference();
+    if (id) {
+      setPreferenceId(id);
+    }
+  };
+
+  if (loading) return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   return (
     <div className="bg-gray-50 min-h-screen px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -80,9 +117,10 @@ const ShoppingCart = () => {
                 Orden de compra
               </h2>
               <div className="space-y-4">
-                <button className="w-full rounded-md bg-indigo-600 py-3 text-white hover:bg-indigo-700 mb-2 hover:scale-110 transition-all duration-200">
-                 Proceder al pago
-                </button>
+              <button onClick={handleBuy} type="button" className="w-full flex items-center justify-center px-4 py-2 bg-green-400 text-white font-semibold rounded-md shadow-md hover:bg-green-700 mt-4" disabled={isCreatedPreference}>
+          <FaCreditCard className="mr-2" />{isCreatedPreference ? 'Creando Preferencia...' : 'Pagar'}
+          </button>
+              {preferenceId && <Wallet initialization={{ preferenceId: preferenceId }} />}
                 <Link href="/checkout">
                 <button className="border-black text-black hover:bg-black-50 w-full rounded-md border py-3 hover:scale-110 transition-all duration-200">
                  Continuar comprando
