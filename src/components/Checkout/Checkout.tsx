@@ -74,15 +74,15 @@ const ShoppingCart = () => {
             </div>
 
             <div className="h-fit rounded-lg bg-white p-6 shadow">
-              <h2 className="text-gray-900 mb-4 text-lg font-medium">
+              <h2 className="mb-4 text-lg font-medium">
                 Orden de compra
               </h2>
               <div className="space-y-4">
-                <button className="w-full rounded-md bg-indigo-600 py-3 text-white transition-colors hover:bg-indigo-700 mb-2">
+                <button className="w-full rounded-md bg-indigo-600 py-3 text-white hover:bg-indigo-700 mb-2 hover:scale-110 transition-all duration-200">
                  Proceder al pago
                 </button>
-                <Link href="/checkout" className="border-gray-300 text-gray-700 hover:bg-gray-50 w-full rounded-md border py-3 transition-colors">
-                <button className="border-gray-300 text-gray-700 hover:bg-gray-50 w-full rounded-md border py-3 transition-colors">
+                <Link href="/checkout">
+                <button className="border-black text-black hover:bg-black-50 w-full rounded-md border py-3 hover:scale-110 transition-all duration-200">
                  Continuar comprando
                 </button>
                 </Link>
