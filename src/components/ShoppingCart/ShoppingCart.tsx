@@ -42,6 +42,7 @@ const ShoppingCart = () => {
   };
 
   const removeProduct = (id: string) => {
+    console.log("removeProduct", id);
     dispatch(removeItem(id));
   };
 
