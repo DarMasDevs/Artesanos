@@ -1,9 +1,11 @@
 "use client";
+import { routes } from "@/config/routes";
 import { getCartData, removeItem, updateQuantity } from "@/redux/features/cart";
 import { RootState } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
+import toast from "react-hot-toast";
 import { FiTrash2, FiMinus, FiPlus, FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -42,8 +44,8 @@ const ShoppingCart = () => {
   };
 
   const removeProduct = (id: string) => {
-    console.log("removeProduct", id);
-    dispatch(removeItem(id));
+    dispatch(removeItem({ _id: id }));
+    toast.success("Producto eliminado del carrito");
   };
 
   const calculateTotal = () => {
@@ -70,10 +72,12 @@ const ShoppingCart = () => {
         {cartItems.length === 0 ? (
           <div className="py-12 text-center">
             <FiShoppingCart className="text-gray-400 mx-auto h-12 w-12" />
-            <p className="text-gray-500 mt-4 text-lg">Your cart is empty</p>
+            <p className="text-gray-500 mt-4 text-lg">Su carrito está vacío</p>
+            <Link href={routes.store}>
             <button className="mt-4 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-              Continue Shopping
+              Continuar comprando
             </button>
+            </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">

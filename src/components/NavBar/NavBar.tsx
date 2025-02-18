@@ -6,7 +6,7 @@ import { routes } from "@/config/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/types/types";
 import Image from "next/image";
-import { logoutUser } from "@/redux/features/userSlice";
+import { getlogindata, logoutUser } from "@/redux/features/userSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { getCartData } from "@/redux/features/cart";
@@ -39,13 +39,16 @@ const NavBar = ({ open }: NavBarProps) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(()=>{
+    dispatch(getlogindata());
+  }, [dispatch]);
   
   useEffect(() => {
-    setCartItemsCount(
-      cartItems.reduce((total, item) => total + item.quantity, 0),
-    );
-    dispatch(getCartData())
-  }, [cartItems, dispatch]);
+    const count = cartItems.reduce((total, item) => total + item.quantity, 0);
+    if (count !== cartItemsCount) {
+      setCartItemsCount(count);
+    }
+  }, [cartItems, cartItemsCount]);
 
   const logout = () => {
     dispatch(logoutUser());

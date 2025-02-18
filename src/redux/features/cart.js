@@ -56,6 +56,7 @@ const cartSlice = createSlice({
         total: calculateTotal(state.cartItems),
       };
       localStorage.setItem("cartData", JSON.stringify(cartData));
+      console.log("Cart data after removal:", cartData); // Verifica que los datos sean correctos
     },
     getCartData: (state) => {
       // Solo cargar datos si el carrito está vacío
