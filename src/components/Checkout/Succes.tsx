@@ -5,11 +5,18 @@ import { FaCheckCircle, FaDownload, FaShare } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/types/types";
+import jsPDF from "jspdf";
+import { getlogindata } from "@/redux/features/userSlice";
 
 const PaymentSuccess = () => {
-  const cartDetails = useSelector((state: RootState) => state.cartReducer.cartItems);
+
+    const dispatch = useDispatch();
+
+  const cartDetails = useSelector(
+    (state: RootState) => state.cartReducer.cartItems,
+  );
   const user = useSelector((state: RootState) => state.userReducer.user);
   const searchParams = useSearchParams();
 
@@ -27,7 +34,9 @@ const PaymentSuccess = () => {
 
   // Datos de la transacción
   const transactionDetails = {
-    amount: cartDetails.reduce((acc, item) => acc + item.subtotal, 0).toFixed(2),
+    amount: cartDetails
+      .reduce((acc, item) => acc + item.subtotal, 0)
+      .toFixed(2),
     date: transactionDate, // Usa el estado para la fecha
     status: status || "N/A",
     collectionId: collectionId || "N/A",
@@ -44,9 +53,29 @@ const PaymentSuccess = () => {
     setTransactionDate(new Date().toLocaleString());
     document.title = "Payment Successful | Thank You";
   }, []);
+  
+  useEffect(() => {
+   dispatch(getlogindata());
+  }, [dispatch]);
 
   const handleDownload = () => {
-    console.log("Downloading receipt...");
+    const doc = new jsPDF();
+
+    // Título del comprobante
+    doc.setFontSize(18);
+    doc.text("Comprobante de Pago", 10, 20);
+
+    // Detalles de la transacción
+    doc.setFontSize(12);
+    doc.text(`Monto: $${transactionDetails.amount}`, 10, 40);
+    doc.text(`Fecha: ${transactionDetails.date}`, 10, 50);
+    doc.text(`ID de Transacción: ${transactionDetails.transactionId}`, 10, 60);
+    doc.text(`Comprador: ${transactionDetails.recipient}`, 10, 70);
+    doc.text(`Método de Pago: ${transactionDetails.paymentMethod}`, 10, 80);
+    doc.text(`Estado: ${transactionDetails.status}`, 10, 90);
+
+    // Guardar el PDF
+    doc.save(`comprobante_${transactionDetails.transactionId}.pdf`);
   };
 
   const handleShare = () => {
