@@ -164,9 +164,11 @@ const ShoppingCart = () => {
                     {checkoutText}
                   </button>
                 </Link>
+                <Link href={routes.store}>
                 <button className="border-gray-300 text-gray-700 hover:bg-gray-500 w-full rounded-md border py-3 transition-colors">
                   Continuar comprando
                 </button>
+                </Link>
               </div>
             </div>
           </div>
