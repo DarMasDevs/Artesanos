@@ -9,7 +9,6 @@ import Image from "next/image";
 import { getlogindata, logoutUser } from "@/redux/features/userSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { getCartData } from "@/redux/features/cart";
 
 interface NavBarProps {
   open: boolean;
