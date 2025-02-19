@@ -1,12 +1,10 @@
-import PaymentSuccess from '@/components/Checkout/Succes'
-import React from 'react'
+import PaymentSuccess from "@/components/Checkout/Succes";
+import { Suspense } from "react";
 
-const page = () => {
+export default function SuccessPage() {
   return (
-    <div className='mt-8'>
-        <PaymentSuccess />
-    </div>
-  )
+    <Suspense fallback={<div>Cargando...</div>}>
+      <PaymentSuccess />
+    </Suspense>
+  );
 }
-
-export default page
