@@ -165,7 +165,7 @@ const ShoppingCart = () => {
                   </button>
                 </Link>
                 <button className="border-gray-300 text-gray-700 hover:bg-gray-500 w-full rounded-md border py-3 transition-colors">
-                  Continue Shopping
+                  Continuar comprando
                 </button>
               </div>
             </div>
