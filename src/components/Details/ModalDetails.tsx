@@ -38,20 +38,20 @@ const ModalDetails = ({
     <Portal>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <AnimatePresence>
-        <motion.div
-        initial={{ opacity: 0, y: "-100%" }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }} 
-        className="relative z-50 m-4 w-[90%] max-w-4xl rounded-lg bg-white p-6 shadow-lg">
-          <button
-            onClick={handleModal}
-            className="text-gray-800 hover:text-red-500 absolute right-4 top-4"
+          <motion.div
+            initial={{ opacity: 0, y: "+100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="relative z-50 m-4 w-[90%] max-w-4xl rounded-lg bg-white p-6 shadow-lg"
           >
-            <IoEyeSharp className="text-2xl" />
-          </button>
-            <div 
-            className="flex flex-col md:flex-row">
+            <button
+              onClick={handleModal}
+              className="text-gray-800 hover:text-red-500 absolute right-4 top-4"
+            >
+              <IoEyeSharp className="text-2xl" />
+            </button>
+            <div className="flex flex-col md:flex-row">
               {/* Imagen a la izquierda en pantallas grandes */}
               <div className="mb-5 flex w-full items-center justify-center md:w-[40%]">
                 <Image
@@ -111,14 +111,16 @@ const ModalDetails = ({
 
                 {/* Cantidad y botón Agregar al carrito */}
                 <div className="flex flex-col items-center gap-2 md:items-start">
-                  <label className="mr-2">Cantidad: </label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                    className="mr-4 w-16 rounded border p-1"
-                  />
+                  <div className="flex gap-4">
+                    <label className="mr-2">Cantidad: </label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={quantity}
+                      onChange={handleQuantityChange}
+                      className="mr-4 w-16 rounded border p-1"
+                    />
+                  </div>
                   <div className="flex items-center gap-4">
                     <button
                       onClick={handleaddtoCart}
@@ -137,8 +139,8 @@ const ModalDetails = ({
                 </div>
               </div>
             </div>
-        </motion.div>
-          </AnimatePresence>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </Portal>
   );

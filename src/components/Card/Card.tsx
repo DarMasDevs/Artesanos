@@ -10,7 +10,7 @@ import { routes } from "@/config/routes";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addItem } from "@/redux/features/cart";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import ModalDetails from "../Details/ModalDetails";
 
 interface Props {
@@ -193,13 +193,6 @@ const Card = ({ product }: Props) => {
 
       {/* Modal */}
       {isModalOpen && (
-        <AnimatePresence>
-          <motion.div
-            initial={{ opacity: 0, y: "-100%" }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-          >
             <ModalDetails
               product={product}
               handleModal={handleModal}
@@ -207,8 +200,6 @@ const Card = ({ product }: Props) => {
               handleaddtoFavorites={handleFavoriteToggle}
               isfavorite={isFavorite}
             />
-          </motion.div>
-        </AnimatePresence>
       )}
     </>
   );
