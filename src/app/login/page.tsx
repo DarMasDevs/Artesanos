@@ -62,12 +62,13 @@ const Page = () => {
   return (
     <div className="bg-gray-100 mt-10 flex min-h-screen items-center justify-center md:p-20">
       <AnimatePresence>
-        <div className="flex w-full max-w-4xl flex-col overflow-hidden rounded-xl bg-white shadow-lg md:flex-row">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+        <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex w-full max-w-4xl flex-col overflow-hidden rounded-xl bg-white shadow-lg md:flex-row">
+          <div
             className="flex w-full flex-col justify-center bg-gradient-to-br from-blue-600 to-purple-600 p-12 text-white md:w-1/2"
           >
             <h2 className="mb-6 text-4xl font-bold">
@@ -85,14 +86,9 @@ const Page = () => {
               alt="Authentication"
               className="rounded-lg shadow-xl"
             />
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full p-12 md:w-1/2"
+          <div className="w-full p-12 md:w-1/2"
           >
             {isLogin ? (
               <LoginForm
@@ -129,8 +125,8 @@ const Page = () => {
                   : "¿Ya tiene una cuenta? Iniciar sesión"}
               </button>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </AnimatePresence>
     </div>
   );
