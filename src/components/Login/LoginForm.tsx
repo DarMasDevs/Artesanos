@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { data } from "../../../public/data";
 import { useDispatch } from "react-redux";
 import { loginUser } from "@/redux/features/userSlice";
+import { motion } from "framer-motion";
 
 interface LoginFormProps {
   formData: {
@@ -35,7 +36,12 @@ const LoginForm = ({ formData, handleInputChange }: LoginFormProps) => {
 
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <motion.form 
+      initial={{ opacity: 0, y: "+100%" }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+    onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label className="text-gray-700 block text-sm font-medium">Email</label>
         <input
@@ -84,7 +90,7 @@ const LoginForm = ({ formData, handleInputChange }: LoginFormProps) => {
             Iniciar sesión
         </button>
       </div>
-    </form>
+    </motion.form>
   );
 };
 

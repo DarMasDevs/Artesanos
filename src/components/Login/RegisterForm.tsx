@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsFillCheckCircleFill, BsXCircleFill } from "react-icons/bs";
+import { motion } from "framer-motion";
 
 interface RegisterFormProps {
   formData: {
@@ -33,7 +34,12 @@ const RegisterForm = ({ formData, handleInputChange,  errors, passwordValidation
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <motion.form 
+      initial={{ opacity: 0, y: "+100%" }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+    onSubmit={handleSubmit} className="space-y-6">
       <div className="flex gap-4">
         <div>
           <label className="text-gray-700 block text-sm font-medium">Nombre</label>
@@ -153,7 +159,7 @@ const RegisterForm = ({ formData, handleInputChange,  errors, passwordValidation
             Registrarse
         </button>
       </div>
-    </form>
+    </motion.form>
   );
 };
 
