@@ -113,7 +113,7 @@ const Card = ({ product }: Props) => {
                         e.stopPropagation();
                         handleFavoriteToggle();
                       }}
-                      className="rounded-full p-2 backdrop-blur-sm transition-colors duration-300"
+                      className="rounded-full p-2 backdrop-blur-sm transition-colors duration-300 bg-white hover:bg-white/70"
                       aria-label="Add to favorites"
                     >
                       {isFavorite ? (
