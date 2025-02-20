@@ -9,6 +9,7 @@ import Image from "next/image";
 import { getlogindata, logoutUser } from "@/redux/features/userSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface NavBarProps {
   open: boolean;
@@ -146,9 +147,14 @@ const NavBar = ({ open }: NavBarProps) => {
                 className="h-10 w-10 rounded-full border-2 border-brown"
               />
             </button>
-
+          <AnimatePresence>
             {isProfileMenuOpen && (
-              <div className="absolute right-0 top-12 z-50 w-48 rounded-md bg-white shadow-lg">
+              <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute right-0 top-12 z-50 w-48 rounded-md bg-white shadow-lg">
                 <Link
                   href={routes.profile}
                   onClick={() => setIsProfileMenuOpen(false)}
@@ -168,8 +174,9 @@ const NavBar = ({ open }: NavBarProps) => {
                     Cerrar sesión
                   </div>
                 </button>
-              </div>
+              </motion.div >
             )}
+            </AnimatePresence>
           </div>
         ) : (
           <Link href={routes.login}>

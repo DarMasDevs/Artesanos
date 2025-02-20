@@ -1,4 +1,4 @@
-"use client"; // Asegúrate de marcar este componente como del lado del cliente
+"use client"; 
 
 import React, { useEffect, useState } from "react";
 import { FaCheckCircle, FaDownload, FaShare } from "react-icons/fa";
@@ -20,7 +20,7 @@ const PaymentSuccess = () => {
   const user = useSelector((state: RootState) => state.userReducer.user);
   const searchParams = useSearchParams();
 
-  // Extrae los datos de la URL
+
   const collectionId = searchParams.get("collection_id");
   const collectionStatus = searchParams.get("collection_status");
   const paymentId = searchParams.get("payment_id");
@@ -29,15 +29,15 @@ const PaymentSuccess = () => {
   const merchantOrderId = searchParams.get("merchant_order_id");
   const preferenceId = searchParams.get("preference_id");
 
-  // Estado para la fecha
+ 
   const [transactionDate, setTransactionDate] = useState<string>("Cargando...");
 
-  // Datos de la transacción
+  
   const transactionDetails = {
     amount: cartDetails
       .reduce((acc, item) => acc + item.subtotal, 0)
       .toFixed(2),
-    date: transactionDate, // Usa el estado para la fecha
+    date: transactionDate,
     status: status || "N/A",
     collectionId: collectionId || "N/A",
     collectionStatus: collectionStatus || "N/A",
@@ -48,7 +48,7 @@ const PaymentSuccess = () => {
     paymentMethod: paymentType || "N/A",
   };
 
-  // Genera la fecha solo en el cliente
+
   useEffect(() => {
     setTransactionDate(new Date().toLocaleString());
     document.title = "Payment Successful | Thank You";
@@ -61,11 +61,11 @@ const PaymentSuccess = () => {
   const handleDownload = () => {
     const doc = new jsPDF();
 
-    // Título del comprobante
+   
     doc.setFontSize(18);
     doc.text("Comprobante de Pago", 10, 20);
 
-    // Detalles de la transacción
+   
     doc.setFontSize(12);
     doc.text(`Monto: $${transactionDetails.amount}`, 10, 40);
     doc.text(`Fecha: ${transactionDetails.date}`, 10, 50);
@@ -74,7 +74,7 @@ const PaymentSuccess = () => {
     doc.text(`Método de Pago: ${transactionDetails.paymentMethod}`, 10, 80);
     doc.text(`Estado: ${transactionDetails.status}`, 10, 90);
 
-    // Guardar el PDF
+   
     doc.save(`comprobante_${transactionDetails.transactionId}.pdf`);
   };
 
