@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";
 import { FiUser, FiShoppingBag, FiBell, FiSettings, FiX } from "react-icons/fi";
+import { HiArchive } from "react-icons/hi";
 
 interface SidebarProps {
   userProfile: User | null;
@@ -19,16 +20,26 @@ const Sidebar = ({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
 }: SidebarProps) => {
+
+
+  const tabs = [
+    { id: "profile", label: "Perfil", icon: FiUser },
+    { id: "orders", label: "Órdenes de Compra", icon: FiShoppingBag },
+    { id: "notifications", label: "Notificaciones", icon: FiBell },
+    { id: "settings", label: "Configuración", icon: FiSettings },
+    { id: "my-products", label: "Mis Productos", icon: HiArchive },
+  ];
+
   return (
     <>
       {/* Menú lateral */}
       <AnimatePresence>
-        {(isMobileMenuOpen || window.innerWidth >= 768) && ( // Mostrar en móviles o en pantallas grandes
+        {(isMobileMenuOpen || window.innerWidth >= 768) && ( 
           <motion.div
-            initial={{ x: "-100%" }} // Inicia fuera de la pantalla
-            animate={{ x: 0 }} // Se desliza hacia la posición normal
-            exit={{ x: "-100%" }} // Se desliza fuera de la pantalla al cerrar
-            transition={{ duration: 0.3, type: "tween" }} // Duración y tipo de animación
+            initial={{ x: "-100%" }} 
+            animate={{ x: 0 }} 
+            exit={{ x: "-100%" }} 
+            transition={{ duration: 0.3, type: "tween" }} 
             className="fixed inset-0 z-50 bg-white dark:bg-gray-800 shadow-lg md:w-64 md:relative"
           >
             <div className="p-4">
@@ -44,7 +55,6 @@ const Sidebar = ({
                   />
                   <span className="font-semibold dark:text-white">Dashboard</span>
                 </div>
-                {/* Botón para cerrar el menú en móviles */}
                 <button
                   className="md:hidden"
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -56,12 +66,7 @@ const Sidebar = ({
               {/* Navegación */}
               <nav>
                 <ul className="space-y-2">
-                  {[
-                    { id: "profile", label: "Perfil", icon: FiUser },
-                    { id: "orders", label: "Órdenes de Compra", icon: FiShoppingBag },
-                    { id: "notifications", label: "Notificaciones", icon: FiBell },
-                    { id: "settings", label: "Configuración", icon: FiSettings },
-                  ].map((item) => (
+                  {tabs.map((item) => (
                     <li key={item.id}>
                       <button
                         onClick={() => setActiveTab(item.id)}

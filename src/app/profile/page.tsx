@@ -11,6 +11,8 @@ import SettingsSection from "@/components/Profile/SettingsSection";
 import EditProfileModal from "@/components/Profile/EditProfileModal";
 import { getlogindata } from "@/redux/features/userSlice";
 import { useRouter } from "next/navigation";
+import { data } from "../../../public/data";
+import MyProducts from "@/components/Profile/MyProducts";
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState("profile");
@@ -32,7 +34,7 @@ const UserDashboard = () => {
       } else {
         setLoading(false);
       }
-    }, 3000); 
+    }, 2000); 
     return () => clearTimeout(timeout);
   }, [router, userProfile]);
 
@@ -52,6 +54,9 @@ const UserDashboard = () => {
     e.preventDefault();
     setIsEditModalOpen(false);
   };
+
+  const productByUser = data.products.filter((product) => product.userId === userProfile?._id);
+  console.log('productByUser', productByUser);
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Cargando...</div>;
@@ -78,6 +83,7 @@ const UserDashboard = () => {
           {activeTab === "orders" && <OrdersSection orders={orders} />}
           {activeTab === "notifications" && <NotificationsSection notifications={notifications} />}
           {activeTab === "settings" && <SettingsSection />}
+          {activeTab === "my-products" &&<MyProducts productByUser={productByUser} />}
         </div>
       </div>
 
