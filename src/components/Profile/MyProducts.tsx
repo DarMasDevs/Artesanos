@@ -84,7 +84,7 @@ const MyProducts = ({ productByUser }: Props) => {
                 </div>
                 <div className="mt-4 text-right md:mt-0 md:text-right">
                   <p className="text-gray-900 text-lg font-medium">
-                    ${(product.price).toFixed(2)}
+                    ${product.price.toFixed(2)}
                   </p>
                 </div>
               </div>

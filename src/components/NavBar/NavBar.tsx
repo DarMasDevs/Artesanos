@@ -94,7 +94,7 @@ const NavBar = ({ open }: NavBarProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between gap-5">
+    <div className="flex items-center justify-between gap-5 ">
       <div className="hidden md:flex lg:flex">
         <div className="flex items-center space-x-3">
           {navlinks.map((link, index) => (

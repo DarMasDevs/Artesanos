@@ -19,7 +19,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex items-center w-full fixed top-0 z-50 justify-around mx-auto lg:max-w-full bg-amber py-2 px-4">
+      <div className="flex items-center w-full fixed top-0 z-9999 justify-around mx-auto lg:max-w-full bg-amber py-2 px-4">
         <div className="flex md:hidden">
           {open === true ? (
             <X
