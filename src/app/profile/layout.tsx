@@ -16,7 +16,7 @@ const Layout = ({ children }: LayoutProps) => {
   const [activeTab, setActiveTab] = useState("profile");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
-    <div className="min-h-screen mt-20 bg-gray-50">
+    <div className=" mt-20 bg-gray-50">
     <div className="flex flex-col md:flex-row">
       <Sidebar
         userProfile={userProfile}
