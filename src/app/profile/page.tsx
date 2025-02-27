@@ -10,36 +10,24 @@ import { useRouter } from "next/navigation";
 const UserDashboard = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const router = useRouter();
-  const userProfile = useSelector(
-    (state: RootState) => state.userReducer?.user,
-  );
+  const userProfile = useSelector((state: RootState) => state.userReducer?.user);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getlogindata());
-  }, [dispatch]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (!userProfile) {
-        router.push("/login");
-      } else {
-        setLoading(false);
-      }
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, [router, userProfile]);
-
-  
-
+    if (!userProfile) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, [dispatch, router, userProfile]);
 
   const handleEditProfile = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsEditModalOpen(false);
   };
-
- 
 
   if (loading) {
     return (
@@ -48,8 +36,9 @@ const UserDashboard = () => {
       </div>
     );
   }
+
   return (
-    <div className={``}>
+    <div className="">
       <div className="flex flex-col md:flex-row">
         <div className="flex-1 p-4">
           <ProfileSection

@@ -8,10 +8,11 @@ import { FaFilter } from "react-icons/fa";
 type Props = {
   categoryName: string | string[];
   products: Products[];
+  queryParam: string | null;
 };
 
-const Store = ({ categoryName, products }: Props) => {
-  const [search, setSearch] = React.useState("");
+const Store = ({ categoryName, products, queryParam }: Props) => {
+  const [search, setSearch] = React.useState(queryParam || "");
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [quantityProducts, setQuantityProducts] = useState(8);
 
@@ -25,11 +26,12 @@ const Store = ({ categoryName, products }: Props) => {
 
   
   const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const searchProducts = products.filter((product) => {
-        return product.title.toLowerCase().includes(search.toLowerCase());
-      });
+    const searchFilteredProducts = products.filter((product) =>
+      product.title.toLowerCase().includes(search.toLowerCase())
+    );
 
+   
+    return searchFilteredProducts.filter((product) => {
       const matchesPrice =
         product.price >= filters.priceRange.min &&
         product.price <= filters.priceRange.max;
@@ -38,14 +40,13 @@ const Store = ({ categoryName, products }: Props) => {
         filters.materials.length === 0 ||
         filters.materials.includes(product.material);
 
-        const matchesRating =
+      const matchesRating =
         filters.rating.length === 0 ||
         filters.rating.includes(
           product.rating >= 4.7 ? 5 : Math.floor(product.rating)
         );
 
-
-      return matchesPrice && matchesMaterial && matchesRating && searchProducts;
+      return matchesPrice && matchesMaterial && matchesRating;
     });
   }, [products, filters, search]);
 
