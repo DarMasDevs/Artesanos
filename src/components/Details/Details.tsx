@@ -82,7 +82,7 @@ const Details = ({ product }: Props) => {
 
 
   return (
-    <div className="z-50000 container mx-auto px-4 py-8 md:mt-14">
+    <div className=" container mx-auto px-4 py-8 md:mt-14">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Image Gallery */}
         <div className="space-y-4">

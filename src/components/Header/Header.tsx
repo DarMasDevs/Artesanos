@@ -11,7 +11,6 @@ import NavBar from "../NavBar/NavBar";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  
 
   const handleMenu = () => {
     setOpen((prev) => !prev);
@@ -19,7 +18,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex items-center w-full fixed top-0 z-9999 justify-around mx-auto lg:max-w-full bg-amber py-2 px-4">
+      <div className="z-50 fixed top-0 mx-auto flex w-full items-center justify-around bg-amber px-4 py-2 lg:max-w-full">
         <div className="flex md:hidden">
           {open === true ? (
             <X
@@ -37,12 +36,12 @@ export default function Header() {
         </div>
 
         <Link href={"/"}>
-          <h1 className="text-3xl text-dark-aqua cursor-pointer">
-            <span className="font-bold text-brown text-4xl">AR</span>tesano
+          <h1 className="cursor-pointer text-3xl text-dark-aqua">
+            <span className="text-4xl font-bold text-brown">AR</span>tesano
           </h1>
         </Link>
         <div>
-          <NavBar open={open}  />
+          <NavBar open={open} />
         </div>
       </div>
     </>
