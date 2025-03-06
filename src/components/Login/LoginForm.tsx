@@ -1,10 +1,10 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { data } from "../../../public/data";
-import { useDispatch } from "react-redux";
-import { loginUser } from "@/redux/features/userSlice";
 import { motion } from "framer-motion";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { useDispatch } from "react-redux";
 
 interface LoginFormProps {
   formData: {
@@ -12,28 +12,48 @@ interface LoginFormProps {
     password: string;
   };
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
- 
 }
 
 const LoginForm = ({ formData, handleInputChange }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({ email: "", password: "" });
-
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const resutl =  data.users.find((user) => user.email === formData.email && user.password === formData.password);
-    console.log('result', resutl);
-    if (resutl) {
-      dispatch(loginUser(resutl));  
-      router.push('/profile'); 
-    } else {
-      setErrors({ ...errors, email: "Email o contraseña incorrectos" });
+    setIsLoading(true);
+    setErrors({ email: "", password: "" });
+  
+    console.log("Intentando iniciar sesión con:", formData.email);
+  
+    try {
+      const result = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+        callbackUrl: "/profile",
+      });
+  
+      console.log("Resultado de inicio de sesión:", result);
+  
+      if (result?.error) {
+        setErrors({ ...errors, email: "Email o contraseña incorrectos" });
+        toast.error("Credenciales inválidas");
+      } else {
+        toast.success("Inicio de sesión exitoso");
+        router.push('/profile');
+        router.refresh();
+      }
+    } catch (error) {
+      console.error("Error de inicio de sesión:", error);
+      setErrors({ ...errors, email: "Ocurrió un error al iniciar sesión" });
+      toast.error("Error al iniciar sesión");
+    } finally {
+      setIsLoading(false);
     }
   };
-
 
   return (
     <motion.form 
@@ -41,7 +61,9 @@ const LoginForm = ({ formData, handleInputChange }: LoginFormProps) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
-    onSubmit={handleSubmit} className="space-y-6">
+      onSubmit={handleSubmit} 
+      className="space-y-6"
+    >
       <div>
         <label className="text-gray-700 block text-sm font-medium">Email</label>
         <input
@@ -85,9 +107,10 @@ const LoginForm = ({ formData, handleInputChange }: LoginFormProps) => {
       <div className="flex flex-col space-y-4">
         <button
           type="submit"
-          className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          disabled={isLoading}
+          className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300"
         >
-            Iniciar sesión
+          {isLoading ? "Iniciando sesión..." : "Iniciar sesión"}
         </button>
       </div>
     </motion.form>

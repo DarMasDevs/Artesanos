@@ -16,13 +16,14 @@ const UserDashboard = () => {
 
   useEffect(() => {
     dispatch(getlogindata());
+    setLoading(false); 
+  }, [dispatch]);
 
+  useEffect(() => {
     if (!userProfile) {
       router.push("/login");
-    } else {
-      setLoading(false);
     }
-  }, [dispatch, router, userProfile]);
+  }, [userProfile, router]);
 
   const handleEditProfile = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

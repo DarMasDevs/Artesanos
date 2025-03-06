@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import { Providers } from "@/redux/providers";
 import { Toaster } from "react-hot-toast";
+import SyncAuthWithRedux from "@/components/Login/SyncAuthWithRedux";
 
 
 const geistSans = Geist({
@@ -32,6 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
+        <SyncAuthWithRedux />
           <Header />
           <Toaster position="top-center" />
           {children}
