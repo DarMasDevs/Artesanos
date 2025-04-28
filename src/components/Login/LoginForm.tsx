@@ -4,7 +4,6 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
-import { useDispatch } from "react-redux";
 
 interface LoginFormProps {
   formData: {
@@ -18,7 +17,6 @@ const LoginForm = ({ formData, handleInputChange }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
