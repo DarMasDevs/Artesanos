@@ -1,19 +1,31 @@
-"use client";
-import Store from '@/components/store/Store';
-import React from 'react';
-import { data } from '../../../public/data';
-import { useSearchParams } from 'next/navigation';
+// page.tsx
+'use client'
 
-const Page = () => {
-  const products = data.products;
-  const param = useSearchParams();
-  const queryParam = param.get("q");
+import Store from '@/components/store/Store'
+import { useParams } from 'next/navigation'
+import { Suspense } from 'react'
+import React from 'react'
+import { data } from '../../../public/data'
+
+const StorePageContent = () => {
+  const router = useParams()
+  const category = router.category
+
+  const products = data.products.filter((product) => product.category === category)
 
   return (
     <div className="p-10 md:px-4 mt-20">
-      <Store categoryName="Todos los productos" products={products} queryParam={queryParam} />
+      <Store categoryName={category || 'Todos los productos'} products={products} />
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+const Page = () => {
+  return (
+    <Suspense fallback={<div>Cargando productos...</div>}>
+      <StorePageContent />
+    </Suspense>
+  )
+}
+
+export default Page
