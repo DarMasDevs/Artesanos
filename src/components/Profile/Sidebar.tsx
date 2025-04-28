@@ -1,8 +1,9 @@
+// profile/sidebar.tsx
 import { User } from "@/types/types";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react"; // AÑADIDO
 import { FiUser, FiShoppingBag, FiBell, FiSettings, FiX } from "react-icons/fi";
 import { HiArchive } from "react-icons/hi";
 
@@ -21,39 +22,32 @@ const Sidebar = ({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
 }: SidebarProps) => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    handleResize(); // Verificar tamaño inicial
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const tabs = [
     { id: "profile", label: "Perfil", link: "/profile", icon: FiUser },
-    {
-      id: "orders",
-      label: "Órdenes de Compra",
-      link: "/profile/orders",
-      icon: FiShoppingBag,
-    },
-    {
-      id: "notifications",
-      label: "Notificaciones",
-      link: "/profile/notifications",
-      icon: FiBell,
-    },
-    {
-      id: "settings",
-      label: "Configuración",
-      link: "/profile/settings",
-      icon: FiSettings,
-    },
-    {
-      id: "my-products",
-      label: "Mis Productos",
-      link: "/profile/my-products",
-      icon: HiArchive,
-    },
+    { id: "orders", label: "Órdenes de Compra", link: "/profile/orders", icon: FiShoppingBag },
+    { id: "notifications", label: "Notificaciones", link: "/profile/notifications", icon: FiBell },
+    { id: "settings", label: "Configuración", link: "/profile/settings", icon: FiSettings },
+    { id: "my-products", label: "Mis Productos", link: "/profile/my-products", icon: HiArchive },
   ];
 
   return (
     <>
       {/* Menú lateral */}
       <AnimatePresence>
-        {(isMobileMenuOpen || window.innerWidth >= 768) && (
+        {(isMobileMenuOpen || isDesktop) && (
           <motion.div
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
@@ -93,13 +87,13 @@ const Sidebar = ({
                         <button
                           onClick={() => setActiveTab(item.id)}
                           className={`flex w-full items-center space-x-3 rounded-lg px-4 py-2 ${
-                          activeTab === item.id
-                            ? "bg-blue-500 text-white"
-                            : "hover:bg-gray-100 dark:hover:bg-gray-700"
-                        }`}
-                      >
-                        <item.icon className="h-5 w-5" />
-                        <span>{item.label}</span>
+                            activeTab === item.id
+                              ? "bg-blue-500 text-white"
+                              : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                          }`}
+                        >
+                          <item.icon className="h-5 w-5" />
+                          <span>{item.label}</span>
                         </button>
                       </Link>
                     </li>

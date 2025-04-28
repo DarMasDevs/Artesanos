@@ -12,7 +12,7 @@ const MyProductsPage = () => {
   const productByUser = data.products.filter(
     (product: Products) => product.userId === userProfile?._id,
   );
-  console.log("productByUser", productByUser);
+  
 
   return (
     <div>
