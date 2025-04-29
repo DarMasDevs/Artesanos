@@ -8,7 +8,7 @@ import { FaFilter } from "react-icons/fa";
 type Props = {
   categoryName: string | string[];
   products: Products[];
-  queryParam?: string | null;
+  queryParam: string | null;
 };
 
 const Store = ({ categoryName, products, queryParam }: Props) => {
@@ -16,7 +16,7 @@ const Store = ({ categoryName, products, queryParam }: Props) => {
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [quantityProducts, setQuantityProducts] = useState(8);
 
-  const maxPrice = Math.max(...products.map((product) => product.price));
+  const maxPrice = products.length > 0 ? Math.max(...products.map((product) => product.price)) : 0
 
   const [filters, setFilters] = React.useState({
     priceRange: { min: 0, max: maxPrice },
@@ -82,6 +82,8 @@ const Store = ({ categoryName, products, queryParam }: Props) => {
   }, {} as Record<number, number>);
 
   const availableRatings = [1, 2, 3, 4, 5];
+
+  console.log("products", sliceProducts);
 
   return (
     <main>

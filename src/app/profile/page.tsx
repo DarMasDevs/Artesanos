@@ -10,13 +10,15 @@ import { useRouter } from "next/navigation";
 const UserDashboard = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const router = useRouter();
-  const userProfile = useSelector((state: RootState) => state.userReducer?.user);
+  const userProfile = useSelector(
+    (state: RootState) => state.userReducer?.user,
+  );
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getlogindata());
-    setLoading(false); 
+    setLoading(false);
   }, [dispatch]);
 
   useEffect(() => {

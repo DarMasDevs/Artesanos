@@ -1,28 +1,38 @@
-// page.tsx
 'use client'
 
 import Store from '@/components/store/Store'
-import { useParams } from 'next/navigation'
-import { Suspense } from 'react'
-import React from 'react'
+import { useParams, useSearchParams } from 'next/navigation'
+import { Suspense, useState, useEffect } from 'react'
 import { data } from '../../../public/data'
 
 const StorePageContent = () => {
   const router = useParams()
   const category = router.category
+  const [isClient, setIsClient] = useState(false)
+  const searchParams = useSearchParams()
+  const queryParam = searchParams.get("q");
 
-  const products = data.products.filter((product) => product.category === category)
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+  
+  const allproducts = data.products
+
+  const products = queryParam ? allproducts.filter((product) => product.title.toLowerCase().includes(queryParam.toLowerCase())) : allproducts
+
+  if (!isClient) return null 
+
 
   return (
-    <div className="p-10 md:px-4 mt-20">
-      <Store categoryName={category || 'Todos los productos'} products={products} />
+    <div className="p-10 md:px-4 mt-20" suppressHydrationWarning>
+      <Store categoryName={category || 'Todos los productos'} products={products} queryParam={queryParam} />
     </div>
   )
 }
 
 const Page = () => {
   return (
-    <Suspense fallback={<div>Cargando productos...</div>}>
+    <Suspense fallback={<div className='w-full h-full flex justify-center items-center'>Loading...</div>}>
       <StorePageContent />
     </Suspense>
   )
