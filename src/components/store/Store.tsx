@@ -8,7 +8,7 @@ import { FaFilter } from "react-icons/fa";
 type Props = {
   categoryName: string | string[];
   products: Products[];
-  queryParam: string | null;
+  queryParam?: string | null;
 };
 
 const Store = ({ categoryName, products, queryParam }: Props) => {
